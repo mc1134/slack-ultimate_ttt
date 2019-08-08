@@ -1,0 +1,28 @@
+{
+  "name": "ultimate_ttt",
+  "version": "1.0.0",
+  "description": "ultimate tic tac toe bot for slack",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mc1134/slack-ultimate_ttt.git"
+  },
+  "keywords": [
+    "thisisatest",
+    "game",
+    "recreation",
+    "antiproductivity"
+  ],
+  "author": "Michael Chen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mc1134/slack-ultimate_ttt/issues"
+  },
+  "homepage": "https://github.com/mc1134/slack-ultimate_ttt#readme",
+  "dependencies": {
+    "@slack/bolt": "^1.2.0"
+  }
+}
