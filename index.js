@@ -2,19 +2,21 @@
 var express = require('express');
 var request = require('request');
 
-// Store our app's ID and Secret. These we got from Step 1. 
-// For this tutorial, we'll keep your API credentials right here. But for an actual app, you'll want to  store them securely in environment variables. 
+// Store our app's ID and Secret. 
 var clientId = process.env.SLACK_CLIENT_ID;
 var clientSecret = process.env.SLACK_CLIENT_SECRET;
+
+// Store the bot's token and secret.
+var botToken = process.env.SLACK_BOT_TOKEN;
+var appSecret = process.env.SLACK_SIGNING_SECRET;
 
 // Instantiates Express and assigns our app variable to it
 var app = express();
 
-// stuff from slack support
 
+// stuff from slack support
 const bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support parsing of application/json type post data
-
 // end stuff from slack support
 
 
@@ -22,10 +24,11 @@ app.use(bodyParser.json()); // support parsing of application/json type post dat
 const PORT=3000;
 
 // Lets start our server
+
 app.listen(PORT, function () {
 	//Callback triggered when server is successfully listening. Hurray!
 	console.log("Example app listening on port " + PORT);
-});
+});/**/
 
 
 // This route handles GET requests to our root ngrok address and responds with the same "Ngrok is working message" we used before
@@ -67,8 +70,33 @@ app.post('/command', function(req, res) {
 
 // handle slack challenge parameter
 app.post('/slack/events', function(req, res) {
-	//res.status(200);
-	//res.set('Content-Type', 'application/json');
-	console.log(req.body);
+	//console.log(req.body);
 	res.send(req.body.challenge);
 });
+
+
+
+// ======== bot message handling ========
+
+// Import slack bolt for bot listening
+const { App } = require('@slack/bolt');
+
+// Instantiates SBapp
+const sbapp = new App({
+	token: botToken,
+	signingSecret: appSecret
+});
+
+// more bot message stuff
+(async () => {
+  // Start your app
+  await sbapp.start(process.env.PORT || 3001);
+
+  console.log('⚡️ Bolt app is running!');
+})();/**/
+
+// Listens to incoming messages that contain "hello"
+sbapp.message('hello', ({ message, say }) => {
+	// say() sends a message to the channel where the event was triggered
+	say(`Hey there <@${message.user}>!`);
+});/**/
