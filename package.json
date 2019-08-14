@@ -24,6 +24,7 @@
   "homepage": "https://github.com/mc1134/slack-ultimate_ttt#readme",
   "dependencies": {
     "@slack/bolt": "^1.2.0",
+    "body-parser": "^1.19.0",
     "request": "^2.88.0"
   }
 }

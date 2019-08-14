@@ -10,6 +10,13 @@ var clientSecret = process.env.SLACK_CLIENT_SECRET;
 // Instantiates Express and assigns our app variable to it
 var app = express();
 
+// stuff from slack support
+
+const bodyParser = require('body-parser');
+app.use(bodyParser.json()); // support parsing of application/json type post data
+
+// end stuff from slack support
+
 
 // Again, we define a port we want to listen to
 const PORT=3000;
@@ -56,4 +63,12 @@ app.get('/oauth', function(req, res) {
 // Route the endpoint that our slash command will point to and send back a simple response to indicate that ngrok is working
 app.post('/command', function(req, res) {
 	res.send('Your ngrok tunnel is up and running!');
+});
+
+// handle slack challenge parameter
+app.post('/slack/events', function(req, res) {
+	//res.status(200);
+	//res.set('Content-Type', 'application/json');
+	console.log(req.body);
+	res.send(req.body.challenge);
 });
